@@ -34,47 +34,30 @@ export default function Home() {
             center.
           </p>
         </div>
-        <div className="flex w-full flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <label className="font-medium">Text to synthesize</label>
-            <textarea id="tts-input" className="w-full min-h-[80px] rounded border p-3" defaultValue={"Hello from Voxify-ai!"} />
-            <div className="flex gap-2">
-              <button
-                id="synthesize"
-                className="rounded bg-foreground px-4 py-2 text-background"
-                onClick={async () => {
-                  const textarea = document.getElementById("tts-input") as HTMLTextAreaElement;
-                  const text = textarea.value;
-                  const res = await fetch("/api/tts", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ text }),
-                  });
-                  if (!res.ok) {
-                    alert("Synthesis failed");
-                    return;
-                  }
-                  const blob = await res.blob();
-                  const url = URL.createObjectURL(blob);
-                  let player = document.getElementById("tts-player") as HTMLAudioElement | null;
-                  if (!player) {
-                    player = document.createElement("audio");
-                    player.id = "tts-player";
-                    player.controls = true;
-                    document.getElementById("tts-container")?.appendChild(player);
-                  }
-                  player.src = url;
-                  player.play();
-                }}
-              >
-                Synthesize
-              </button>
-              <a className="ml-2 self-center text-sm text-zinc-600" href="#" id="tts-download" onClick={(e) => e.preventDefault()}>
-                (audio will appear below)
-              </a>
-            </div>
-          </div>
-          <div id="tts-container" className="mt-4" />
+        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+          <a
+            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
+            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              className="dark:invert"
+              src="/vercel.svg"
+              alt="Vercel logomark"
+              width={16}
+              height={16}
+            />
+            Deploy Now
+          </a>
+          <a
+            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
+            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Documentation
+          </a>
         </div>
       </main>
     </div>
